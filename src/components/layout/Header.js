@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link} from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import "./Header.css";
@@ -11,7 +11,7 @@ const Header = ({ isAuthenticated, onLogout }) => {
         <img
           className="header_logo"
           src="http://pngimg.com/uploads/amazon/amazon_PNG11.png"
-          alt="'Amazon logo"
+          alt="'Amazon logo" 
         />
       </Link>
 

@@ -16,7 +16,7 @@ const App = () => {
   useEffect(() => {
     const userInfo = localStorage.getItem('isLoggedIn')
 
-    if(userInfo ==='1') {
+    if(userInfo === '1') {
       setIsLoggedIn(true)
     }
   }, [])
@@ -33,7 +33,7 @@ const App = () => {
 
   return (
     <>
-      <Header isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
+    <Header isAuthenticated={isLoggedIn} onLogout={logoutHandler}/>
       <main>
         <Switch>
           <Route path="/" exact>
@@ -49,7 +49,7 @@ const App = () => {
             <ProductDetails />
           </Route>
           <Route path="/login">
-            <Login onlogin={loginHandler}/>
+            <Login onLogin={loginHandler}/>
           </Route>
           <Route path="*">
             <NotFound />

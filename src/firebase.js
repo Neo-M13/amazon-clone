@@ -10,7 +10,7 @@ const firebaseConfig = {
   storageBucket: "zaio--clone-9e7bd.appspot.com",
   messagingSenderId: "897410032892",
   appId: "1:897410032892:web:5073f9493d4284b0586379",
-  measurementId: "G-W6KGKSHHMN"
+  measurementId: "G-W6KGKSHHMN",
 };
 
 
