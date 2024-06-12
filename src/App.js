@@ -8,6 +8,8 @@ import {ProductDetails} from "./components/ProductDetails";
 import {Redirect} from "react-router-dom/cjs/react-router-dom.min";
 import Login from "./components/Login";
 import NotFound from "./components/NotFound";
+import AuthContext from "./context/authContext";
+
 
 
 const App = () => {
@@ -15,6 +17,7 @@ const App = () => {
 
   useEffect(() => {
     const userInfo = localStorage.getItem('isLoggedIn')
+    console.log("CHECKING LOG IN", userInfo);
 
     if(userInfo === '1') {
       setIsLoggedIn(true)
@@ -32,7 +35,7 @@ const App = () => {
   }
 
   return (
-    <>
+    <AuthContext.Provider value= {{isLoggedIn: false}}>
     <Header isAuthenticated={isLoggedIn} onLogout={logoutHandler}/>
       <main>
         <Switch>
@@ -56,7 +59,7 @@ const App = () => {
           </Route>
         </Switch>
       </main>
-    </>
+      </AuthContext.Provider>
   );
 };
 

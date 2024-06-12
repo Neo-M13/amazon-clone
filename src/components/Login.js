@@ -13,7 +13,7 @@ const reducer = (state, action) => {
     return {emailValue: "" , passwordValue: ""}
 };
 
-const Login = () => {
+const Login = ({onLogin}) => {
   const [formIsValid, setFormIsValid] = useState(false);
 
   const [state, dispatch] = useReducer(reducer, {
@@ -27,7 +27,7 @@ const Login = () => {
   useEffect(() => {
     const identifier = setTimeout (() => {
         console.log("CHECKING FORM VALIDITY");
-        setFormIsValid(email.includes("@") && password.trial().length > 6);
+        setFormIsValid(email.includes("@") && password.trim().length > 6);
     },500);
     return () => {
         console.log("CLEANUP HERE");
@@ -47,6 +47,7 @@ const Login = () => {
     e.preventDefault();
     console.log("Entered Email: ", email);
     console.log("Entered Password: ", password);
+    onLogin(email, password);
   };
 
   return (
