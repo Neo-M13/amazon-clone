@@ -1,16 +1,13 @@
+import { useContext } from 'react'
 import { Link } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import "./Header.css";
 import  AuthContext  from "../../context/authContext"
 
+const Header = () => {
+      const ctx = useContext (AuthContext);
 
-
-const Header = ({ isAuthenticated, onLogout }) => {
-
-  return (
-    <AuthContext.Consumer>
-      {(ctx) => {
         return  (
         <header className="header">
         <Link to="/">
@@ -26,9 +23,9 @@ const Header = ({ isAuthenticated, onLogout }) => {
           <SearchIcon className="search_icon" />
         </div>
         <div className="header_nav">
-          {isAuthenticated.isLoggedIn ? (
+          {ctx.isLoggedIn ? (
             <Link to="/">
-              <div className="header_option" onClick={onLogout}>
+              <div className="header_option" onClick={ctx.onLogout}>
                 <span className="header_optionOne">Hello User</span>
                 <span className="header_optionTwo">Sign out</span>
               </div>
@@ -57,12 +54,8 @@ const Header = ({ isAuthenticated, onLogout }) => {
           </div>
         </div>
       </header>
-        );
-      }};
-      
-    </AuthContext.Consumer>
-   
-  );
+        )
+     
 };
 
 export default Header;

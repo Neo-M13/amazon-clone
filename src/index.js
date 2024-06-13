@@ -1,13 +1,18 @@
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import{ BrowserRouter } from "react-router-dom";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import { BrowserRouter } from "react-router-dom";
+import { AuthContextProvider } from "./context/authContext";
+import { ShoppingState } from "./context/shopping/ShoppingState";
 
 
 ReactDOM.render(
-<BrowserRouter>
-<App />
-</BrowserRouter>,
- document.
-getElementById("root"));
-
+  <BrowserRouter>
+    <AuthContextProvider>
+        <ShoppingState>
+        <App />
+        </ShoppingState>
+    </AuthContextProvider>
+  </BrowserRouter>,
+  document.getElementById("root")
+);
