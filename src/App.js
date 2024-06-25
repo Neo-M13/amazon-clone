@@ -1,8 +1,10 @@
 import "./App.css";
 import { useContext, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 import Home from "./components/home";
-import Products from "./components/Products";
+import Products from "./components/Products"; 
 import Header from "./components/layout/Header";
 import { ProductDetails } from "./components/ProductDetails";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
@@ -10,10 +12,16 @@ import Login from "./components/Login";
 import NotFound from "./components/NotFound";
 import ShoppingContext from "./context/shopping/shoppingContext";
 import { auth } from "./firebase";
+import Checkout from "./components/Checkout";
+import Payment from "./components/Payment";
+
+const promise = loadStripe(
+  "pk_test_51PVbLbK4QXnm9Y1IiemArD7JGnXntWsSDarl9bkzCYca8T5hcK9W8PR34ijoFiJosn3LS47o6ygQ93yFLNT3ZYOK00t8o9XpB8"
+);
 
 const App = () => {
   const shoppingContext = useContext(ShoppingContext);
-  const { setUser } = shoppingContext; 
+  const { setUser } = shoppingContext;
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
       console.log("User is ->", authUser);
@@ -41,6 +49,14 @@ const App = () => {
           </Route>
           <Route path="/products/:id">
             <ProductDetails />
+          </Route>
+          <Route path="/checkout">
+            <Checkout />
+          </Route>
+          <Route path="/payment">
+            <Elements stripe={promise}>
+              <Payment />
+            </Elements>
           </Route>
           <Route path="/login">
             <Login />

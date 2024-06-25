@@ -7,8 +7,7 @@ import "./Header.css";
 import { auth } from "../../firebase";
 
 const Header = () => {
-  const shoppingContext = useContext(ShoppingContext);
-  const { basket, user } = shoppingContext;
+  const { basket, user } = useContext(ShoppingContext);
 
   const handleAuthentication = () => {
     if (user) {
