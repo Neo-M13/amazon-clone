@@ -1,7 +1,12 @@
+const { onRequest } = require("firebase-functions/v2/https");
+const logger = require("firebase-functions");
 const functions = require("firebase-functions");
 const express = require("express");
 const cors = require("cors");
-const stripe = require("stripe")(functions.config().stripe.secret);
+const { Payment } = require("@mui/icons-material");
+const stripe = require("stripe")(
+  "sk_test_51PW7PxFTqaovi8uZp6QX0NEMYMMJze7Anok48yCJOdXDk70wW4TFdSNJBzQD8FX2J69DXS5pOXlVHvL1gIP93clr00cAtEQ3CO"
+);
 
 // - API
 
@@ -18,24 +23,15 @@ app.get("/", (req, res) => res.status(200).send("Hello World!"));
 app.post("/payments/create", async (req, res) => {
   const total = req.query.total;
 
-  console.log("Payment Request Received for this amount >>> ", total);
+  console.log("Payment request recieved", total);
 
-  try {
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: total,
-      currency: "usd",
-    });
-
-    // OK - Created
-    res.status(201).send({
-      clientSecret: paymentIntent.client_secret,
-    });
-  } catch (error) {
-    console.error("Error creating payment intent:", error);
-    res.status(500).send("Internal Server Error");
-  }
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: total,
+    currency: "usd",
+  });
+  //If okay created
+  res.status(201).send({ clientSecret: paymentIntent.client_secret });
 });
 
 // - Listen Commands
 exports.api = functions.https.onRequest(app);
-

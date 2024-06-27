@@ -16,7 +16,7 @@ import Checkout from "./components/Checkout";
 import Payment from "./components/Payment";
 
 const promise = loadStripe(
-  "pk_test_51PVbLbK4QXnm9Y1IiemArD7JGnXntWsSDarl9bkzCYca8T5hcK9W8PR34ijoFiJosn3LS47o6ygQ93yFLNT3ZYOK00t8o9XpB8"
+  "pk_test_51PW7PxFTqaovi8uZmfzH3qtyFdq8PJMMZV7APIr2mRDNbT5cksrN3fIvEQFvwgQKX2sZ7bzYEJbBpKDhUbuBvUMQ00rLD2m3uM"
 );
 
 const App = () => {
@@ -69,5 +69,6 @@ const App = () => {
     </>
   );
 };
+
 
 export default App;
