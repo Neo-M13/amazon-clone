@@ -6,10 +6,11 @@ import ShoppingContext from "../context/shopping/shoppingContext";
 import CheckoutProduct from "./CheckoutProduct";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import "./Payment.css";
+import { db } from "../firebase";
 
 const Payments = () => {
   const shoppingContext = useContext(ShoppingContext);
-  const { basket, user, getBasketTotal } = shoppingContext;
+  const { basket, user, getBasketTotal, emptyBasket } = shoppingContext;
 
   const history = useHistory();
 
@@ -25,11 +26,15 @@ const Payments = () => {
   useEffect(() => {
     // Generate the special stripe secret which will allow us to charge the customer
     const getClientSecret = async () => {
-      const response = await axios({
-        method: "post",
-        url: `/payments/create?total=${getBasketTotal(basket) * 100}`,
-      });
-      setClientSecret(response.data.clientSecret);
+      try {
+        const response = await axios({
+          method: "post",
+          url: `/payments/create?total=${getBasketTotal(basket) * 100}`,
+        });
+        setClientSecret(response.data.clientSecret);
+      } catch (error) {
+        console.error("Error fetching client secret:, error");
+      }
     };
 
     getClientSecret();
@@ -47,9 +52,21 @@ const Payments = () => {
       })
       .then(({ paymentIntent }) => {
         // Payment intent = payment confirmation
+        db.collection("user")
+          .doc(user?.uid)
+          .collection("orders")
+          .doc(paymentIntent.id)
+          .set({ 
+            basket: basket, 
+            amount: paymentIntent.amount, 
+            created: paymentIntent.created,
+           });
         setSucceeded(true);
         setError(null);
         setProcessing(false);
+        // Empty the basket
+        emptyBasket();
+        // Redirect the user to order page
         history.push("/orders");
       });
   };

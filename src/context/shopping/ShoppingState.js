@@ -17,6 +17,12 @@ export const ShoppingState = (props) => {
     });
   };
 
+  const emptyBasket = () => {
+    dispatch({
+      type: 'EMPTY_BASKET'
+    })
+  }
+
   const removeFromBasket = (item) => {
     dispatch({ type: "REMOVE_FROM_BASKET", payload: item });
   };
@@ -38,6 +44,7 @@ export const ShoppingState = (props) => {
         addToBasket,
         setUser,
         removeFromBasket,
+        emptyBasket,
       }}
     >
       {props.children}
